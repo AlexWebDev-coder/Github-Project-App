@@ -19,7 +19,7 @@ const DefaultLayoutFooter = () => {
 
   const pages = total_count ? Math.ceil(total_count / +perPage) : 1;
 
-  const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
+  const handleChange = (_event: React.ChangeEvent<unknown>, value: number) => {
     actions.setPage(value);
   };
 
