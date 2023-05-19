@@ -9,6 +9,7 @@ const initialState: IInitialState = {
     incomplete_results: false,
   },
   search: "",
+  comment: "",
   perPage: "10",
   page: 1,
   status: "idle",
@@ -27,6 +28,9 @@ const projectSlice = createSlice({
     setPerPage: (state, action: PayloadAction<string>) => {
       state.perPage = action.payload;
     },
+    setComment: (state, action: PayloadAction<string>) => {
+      state.comment = action.payload;
+    },
   },
 
   extraReducers: (builder) => {
@@ -44,5 +48,6 @@ const projectSlice = createSlice({
   },
 });
 
-export const { setSearch, setPerPage, setPage } = projectSlice.actions;
+export const { setSearch, setPerPage, setPage, setComment } =
+  projectSlice.actions;
 export default projectSlice.reducer;

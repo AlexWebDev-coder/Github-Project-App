@@ -1,5 +1,4 @@
 import { styled } from "@mui/material";
-import { Link } from "react-router-dom";
 
 export const Card = styled("div")(() => ({
   background: "#FFFFFF",
@@ -9,8 +8,10 @@ export const Card = styled("div")(() => ({
   padding: "7px 16px",
 }));
 
-export const ProjectTitle = styled(Link)(() => ({
+export const ProjectTitle = styled("div")(() => ({
   color: "#000",
+  display: "flex",
+  justifyContent: "space-between",
 }));
 
 export const ProjectAuthor = styled("div")(() => ({

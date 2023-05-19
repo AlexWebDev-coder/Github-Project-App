@@ -12,6 +12,7 @@ const DefaultLayoutFooter = () => {
   const actions = useAction();
   const perPage = useAppSelector((state) => state.project.perPage);
   const page = useAppSelector((state) => state.project.page);
+  const status = useAppSelector((state) => state.project.status);
   const total_count = useAppSelector(
     (state) => state.project.project.total_count
   );
@@ -21,6 +22,10 @@ const DefaultLayoutFooter = () => {
   const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
     actions.setPage(value);
   };
+
+  if (!total_count || status === "loading") {
+    return <></>;
+  }
 
   return (
     <Footer>

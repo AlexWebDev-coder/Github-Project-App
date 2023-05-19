@@ -3,6 +3,7 @@ export interface IInitialState {
   search: string;
   perPage: string;
   page: number;
+  comment: string;
   status: "loading" | "succeeded" | "failed" | "idle";
 }
 

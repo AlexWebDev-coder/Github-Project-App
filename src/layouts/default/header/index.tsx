@@ -8,6 +8,7 @@ import { useAppSelector } from "../../../hooks/redux";
 import { useAction } from "../../../hooks/redux/useAction";
 
 import SearchIcon from "@mui/icons-material/Search";
+import useDebounce from "../../../hooks/useDebounce";
 
 const DefaultLayoutHeader: FC = (): JSX.Element => {
   const actions = useAction();
@@ -15,9 +16,11 @@ const DefaultLayoutHeader: FC = (): JSX.Element => {
   const per_page = useAppSelector((state) => state.project.perPage);
   const page = useAppSelector((state) => state.project.page);
 
+  const debounceValue = useDebounce(searchValue, 300);
+
   useEffect(() => {
-    actions.fetchProjectAsync({ page, per_page });
-  }, [page, per_page]);
+    actions.fetchProjectAsync({ value: debounceValue, page, per_page });
+  }, [debounceValue, page, per_page]);
 
   const handleChange = (
     e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>

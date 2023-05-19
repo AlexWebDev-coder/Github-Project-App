@@ -1,23 +1,30 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import api from "../../../api/axios";
+import { toast } from "react-toastify";
 
 interface IProps {
+  value: string;
   page: number;
   per_page: string;
 }
 
 export const fetchProjectAsync = createAsyncThunk(
   "get/project",
-  async ({ page, per_page }: IProps) => {
+  async ({ page, value, per_page }: IProps) => {
     try {
       const { data } = await api.get(
-        `search/repositories?q=subject&per_page=${per_page}&page=${page}`
+        `search/repositories?q=${
+          value || "subject"
+        }&per_page=${per_page}&page=${page}`
       );
 
       return data;
     } catch (error: any) {
-      console.log(error);
+      const err = error?.response?.data?.message;
 
+      if (err === "Only the first 1000 search results are available") {
+        toast.error("Доступны только первые 1000 результатов поиска");
+      }
       return error;
     }
   }

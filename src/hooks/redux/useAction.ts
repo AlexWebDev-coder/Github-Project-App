@@ -2,6 +2,7 @@ import { fetchProjectAsync } from "./../../store/thunk/projectThunk/index";
 import { useAppDispatch } from ".";
 import { bindActionCreators } from "@reduxjs/toolkit";
 import {
+  setComment,
   setPage,
   setPerPage,
   setSearch,
@@ -11,6 +12,7 @@ const allReducers = {
   setPage: setPage,
   setSearch: setSearch,
   setPerPage: setPerPage,
+  setComment: setComment,
   fetchProjectAsync: fetchProjectAsync,
 };
 

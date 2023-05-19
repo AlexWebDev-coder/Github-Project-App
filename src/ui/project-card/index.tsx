@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import { ChangeEvent, FC, useState } from "react";
 import { Avatar } from "@mui/material";
 import {
   Card,
@@ -12,27 +12,60 @@ import {
 import StarIcon from "@mui/icons-material/Star";
 import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
 import CreateIcon from "@mui/icons-material/Create";
+import ClearIcon from "@mui/icons-material/Clear";
 
 import FormTextField from "../form/textfield";
 import { Link } from "react-router-dom";
-
-interface IProps {
-  url: string;
-  star: number;
-  views: number;
-  author: string;
-  avatar: string;
-  projectName: string;
-}
+import ActionTooltip from "../action-tooltip";
+import ViewsDetailProject from "../modal/views-project";
+import { IProps } from "./types";
 
 const ProjectCard: FC<IProps> = (props): JSX.Element => {
-  const { url, star, views, author, avatar, projectName } = props;
-  const [value, setValue] = useState("");
+  const {
+    id,
+    url,
+    star,
+    views,
+    author,
+    avatar,
+    projectName,
+    description,
+    language,
+    created,
+    lastUpdate,
+  } = props;
+  const [value, setValue] = useState<string>("");
+
+  const handleAddComment = (
+    e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
+  ) => {
+    setValue(e.target.value);
+  };
 
   return (
     <Card>
-      <ProjectTitle to={url} target="_blank">
-        {projectName}
+      <ProjectTitle>
+        <Link to={url} target="_blank" style={{ color: "#000" }}>
+          {projectName}
+        </Link>
+        <div>
+          <ViewsDetailProject
+            id={id}
+            url={url}
+            star={star}
+            views={views}
+            avatar={avatar}
+            author={author}
+            projectName={projectName}
+            description={description}
+            created={created}
+            lastUpdate={lastUpdate}
+            language={language}
+          />
+          <ActionTooltip title="Delete">
+            <ClearIcon color="error" />
+          </ActionTooltip>
+        </div>
       </ProjectTitle>
       <ProjectAuthor>
         <Avatar alt="Author" src={avatar} sx={{ width: 56, height: 56 }} />
@@ -53,10 +86,11 @@ const ProjectCard: FC<IProps> = (props): JSX.Element => {
       <ProjectAddComment>
         <FormTextField
           fullWidth
+          disabled
           value={value}
           variant="outlined"
           iconEnd={<CreateIcon />}
-          onChange={(e) => setValue(e.target.value)}
+          onChange={handleAddComment}
         />
       </ProjectAddComment>
     </Card>
