@@ -16,7 +16,7 @@ const initialState: IInitialState = {
 };
 
 const projectSlice = createSlice({
-  name: "users",
+  name: "project",
   initialState: initialState,
   reducers: {
     setPage: (state, action: PayloadAction<number>) => {
@@ -41,6 +41,7 @@ const projectSlice = createSlice({
       .addCase(fetchProjectAsync.fulfilled, (state, action) => {
         state.status = "succeeded";
         state.project = action.payload;
+        if (action.payload?.name) state.page = 1;
       })
       .addCase(fetchProjectAsync.rejected, (state) => {
         state.status = "failed";

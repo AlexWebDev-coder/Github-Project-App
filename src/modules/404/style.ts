@@ -34,4 +34,5 @@ export const ResetRequest = styled("p")(() => ({
   lineHeight: "20px",
   textAlign: "center",
   color: "#6534FF",
+  cursor: "pointer",
 }));
