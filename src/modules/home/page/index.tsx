@@ -6,6 +6,7 @@ import { Card, Container } from "./style";
 import { useAppSelector } from "../../../hooks/redux";
 import Loading from "../../../ui/loading";
 import NotFoundPage from "../../../page/404";
+import Error500 from "../../../page/500";
 
 const HomePage: FC = (): JSX.Element => {
   const project = useAppSelector((state) => state.project.project);
@@ -16,6 +17,9 @@ const HomePage: FC = (): JSX.Element => {
 
   if (status === "loading") {
     return <Loading />;
+  }
+  if (status === "failed") {
+    return <Error500 />;
   }
 
   if (!total_count) {
