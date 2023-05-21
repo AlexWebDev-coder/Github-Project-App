@@ -1,14 +1,29 @@
+import {
+  ChangeEvent,
+  FC,
+  lazy,
+  memo,
+  useCallback,
+  useEffect,
+  Suspense,
+} from "react";
+
+import { useLocation, useNavigate } from "react-router-dom";
+
 import { useAppSelector } from "../../../hooks/redux";
 import { useAction } from "../../../hooks/redux/useAction";
-
-import FormSelect from "../../../ui/form/select";
-import AppPagination from "../../../ui/pagination";
 
 import { valuesPerPage } from "../../../util/constants";
 
 import { Footer, SelectPerPage } from "./style";
+import { SelectChangeEvent } from "@mui/material";
 
-const DefaultLayoutFooter = () => {
+import { IQueryParams } from "./types";
+
+const FormSelect = lazy(() => import("../../../ui/form/select"));
+const AppPagination = lazy(() => import("../../../ui/pagination"));
+
+const DefaultLayoutFooter: FC = memo((): JSX.Element => {
   const actions = useAction();
   const perPage = useAppSelector((state) => state.project.perPage);
   const page = useAppSelector((state) => state.project.page);
@@ -17,11 +32,50 @@ const DefaultLayoutFooter = () => {
     (state) => state.project.project.total_count
   );
 
-  const pages = total_count ? Math.ceil(total_count / +perPage) : 1;
+  const navigate = useNavigate();
+  const location = useLocation();
 
-  const handleChange = (_event: React.ChangeEvent<unknown>, value: number) => {
-    actions.setPage(value);
+  const handleQueryParams = (params: IQueryParams) => {
+    const searchParams = new URLSearchParams(location.search);
+    Object.entries(params).forEach(([key, value]) => {
+      if (value) {
+        searchParams.set(key, value.toString());
+      } else {
+        searchParams.delete(key);
+      }
+    });
+    navigate({ search: searchParams.toString() });
   };
+
+  useEffect(() => {
+    const searchParams = new URLSearchParams(location.search);
+    const perPageParam = searchParams.get("per_page");
+    const pageParam = searchParams.get("page");
+    if (perPageParam) {
+      actions.setPerPage(perPageParam);
+    }
+    if (pageParam) {
+      actions.setPage(parseInt(pageParam));
+    }
+  }, [page, perPage]);
+
+  const handlePerPageChange = useCallback(
+    (event: SelectChangeEvent) => {
+      actions.setPerPage(event.target.value);
+      handleQueryParams({ per_page: parseInt(event.target.value), page: page });
+    },
+    [actions, handleQueryParams, page]
+  );
+
+  const handlePageChange = useCallback(
+    (_event: ChangeEvent<unknown>, value: number) => {
+      actions.setPage(value);
+      handleQueryParams({ per_page: parseInt(perPage), page: value });
+    },
+    [actions, handleQueryParams, perPage]
+  );
+
+  const pages = total_count ? Math.ceil(total_count / +perPage) : 1;
 
   if (!total_count || status === "loading") {
     return <></>;
@@ -29,17 +83,23 @@ const DefaultLayoutFooter = () => {
 
   return (
     <Footer>
-      <SelectPerPage>
-        <FormSelect
-          variant="outlined"
-          value={perPage}
-          values={valuesPerPage}
-          onChange={(e) => actions.setPerPage(e.target.value)}
+      <Suspense fallback={<div>Loading...</div>}>
+        <SelectPerPage>
+          <FormSelect
+            variant="outlined"
+            value={perPage}
+            values={valuesPerPage}
+            onChange={handlePerPageChange}
+          />
+        </SelectPerPage>
+        <AppPagination
+          count={pages}
+          page={page}
+          handleChange={handlePageChange}
         />
-      </SelectPerPage>
-      <AppPagination count={pages} page={page} handleChange={handleChange} />
+      </Suspense>
     </Footer>
   );
-};
+});
 
 export default DefaultLayoutFooter;
