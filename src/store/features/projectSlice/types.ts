@@ -1,7 +1,7 @@
 export interface IInitialState {
   project: IUsersProject;
   search: string;
-  perPage: string;
+  perPage: number;
   page: number;
   comment: string;
   status: "loading" | "succeeded" | "failed" | "idle";

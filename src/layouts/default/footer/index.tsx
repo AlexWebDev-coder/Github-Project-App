@@ -52,7 +52,7 @@ const DefaultLayoutFooter: FC = memo((): JSX.Element => {
     const perPageParam = searchParams.get("per_page");
     const pageParam = searchParams.get("page");
     if (perPageParam) {
-      actions.setPerPage(perPageParam);
+      actions.setPerPage(parseInt(perPageParam));
     }
     if (pageParam) {
       actions.setPage(parseInt(pageParam));
@@ -61,7 +61,7 @@ const DefaultLayoutFooter: FC = memo((): JSX.Element => {
 
   const handlePerPageChange = useCallback(
     (event: SelectChangeEvent) => {
-      actions.setPerPage(event.target.value);
+      actions.setPerPage(+event.target.value);
       handleQueryParams({ per_page: parseInt(event.target.value), page: page });
     },
     [actions, handleQueryParams, page]
@@ -70,7 +70,7 @@ const DefaultLayoutFooter: FC = memo((): JSX.Element => {
   const handlePageChange = useCallback(
     (_event: ChangeEvent<unknown>, value: number) => {
       actions.setPage(value);
-      handleQueryParams({ per_page: parseInt(perPage), page: value });
+      handleQueryParams({ per_page: perPage, page: value });
     },
     [actions, handleQueryParams, perPage]
   );

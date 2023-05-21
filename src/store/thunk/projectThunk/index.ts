@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 interface IProps {
   value: string;
   page: number;
-  per_page: string;
+  per_page: number;
 }
 
 export const fetchProjectAsync = createAsyncThunk(

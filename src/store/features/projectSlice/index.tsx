@@ -10,7 +10,7 @@ const initialState: IInitialState = {
   },
   search: "",
   comment: "",
-  perPage: "10",
+  perPage: 10,
   page: 1,
   status: "idle",
 };
@@ -25,7 +25,7 @@ const projectSlice = createSlice({
     setSearch: (state, action: PayloadAction<string>) => {
       state.search = action.payload;
     },
-    setPerPage: (state, action: PayloadAction<string>) => {
+    setPerPage: (state, action: PayloadAction<number>) => {
       state.perPage = action.payload;
     },
     setComment: (state, action: PayloadAction<string>) => {

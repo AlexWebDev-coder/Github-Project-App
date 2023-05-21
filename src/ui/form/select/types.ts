@@ -1,7 +1,7 @@
 import { SelectChangeEvent } from "@mui/material";
 
 export interface IProps {
-  value: string;
+  value: number;
   onChange: (event: SelectChangeEvent) => void;
   values: string[];
   inputLabel?: string;
