@@ -9,7 +9,7 @@ const Error500: FC = (): JSX.Element => {
   const actions = useAction();
 
   const handleReset = (): void => {
-    actions.fetchProjectAsync({ page: 1, value: "", per_page: "10" });
+    actions.fetchProjectAsync({ page: 1, value: "", per_page: 10 });
     actions.setSearch("");
   };
 

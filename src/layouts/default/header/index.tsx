@@ -16,7 +16,7 @@ const DefaultLayoutHeader: FC = (): JSX.Element => {
   const per_page = useAppSelector((state) => state.project.perPage);
   const page = useAppSelector((state) => state.project.page);
 
-  const debounceValue = useDebounce(searchValue, 300);
+  const debounceValue = useDebounce(searchValue, 500);
 
   useEffect(() => {
     actions.fetchProjectAsync({ value: debounceValue, page, per_page });
@@ -30,6 +30,13 @@ const DefaultLayoutHeader: FC = (): JSX.Element => {
 
   const handleSearch = () => {};
 
+  // function handleKeyDown(event: React.KeyboardEvent<HTMLInputElement>) {
+  //   if (event.key === "Enter") {
+  //     event.preventDefault();
+  //     actions.fetchProjectAsync({ value: debounceValue, page, per_page });
+  //   }
+  // }
+
   return (
     <Header>
       <FormTextField
@@ -37,6 +44,7 @@ const DefaultLayoutHeader: FC = (): JSX.Element => {
         variant="outlined"
         value={searchValue}
         onChange={handleChange}
+        // onKeyPress={handleKeyDown}
         iconEnd={<SearchIcon onClick={handleSearch} />}
         placeholder="Начните вводить текст для поиска (не менее трех символов)"
       />

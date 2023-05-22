@@ -87,7 +87,7 @@ const DefaultLayoutFooter: FC = memo((): JSX.Element => {
         <SelectPerPage>
           <FormSelect
             variant="outlined"
-            value={perPage}
+            value={perPage.toString()}
             values={valuesPerPage}
             onChange={handlePerPageChange}
           />

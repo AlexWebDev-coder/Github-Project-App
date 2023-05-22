@@ -31,7 +31,9 @@ const FormSelect: FC<IProps> = (props) => {
           onChange={onChange}
         >
           {values.map((item) => (
-            <MenuItem value={item}>{item}</MenuItem>
+            <MenuItem key={item} value={item}>
+              {item}
+            </MenuItem>
           ))}
         </Select>
       </FormControl>
