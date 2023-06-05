@@ -1,7 +1,14 @@
-This application can help you find projects published on Github, with the implementation of any programming languages.
+Это приложение может помочь вам найти проекты, опубликованные на Github, с реализацией любых языков программирования.
 
 Stack: React.js, Typescript, Redux-Toolkit.
 
-After git clone it is necessary to say dependencies: npm install or yarn install
+Возможности: 
+Детальный просмотр
+Переход на репозиторий нажатием на Title
+Переход на аккаунт пользователя нажатием на Имя репозитория возле иконки
+Просмотр звезд на Github
+Просмотр других страниц спомощью пагинации и увеличения проектов на странице спомощью per_page
+
+После git clone необходимо указать зависимости: npm install или yarn install
 
 ![github](https://github.com/AlexWebDev-coder/Github-Project-App/assets/88274695/d14c2569-b193-4811-8a12-0d0b16bb5654)
